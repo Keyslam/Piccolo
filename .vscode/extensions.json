@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "sumneko.lua",
+        "tomblind.local-lua-debugger-vscode",
+        "editorconfig.editorconfig",
+        "ryanluker.vscode-coverage-gutters",
+        "johnnymorganz.stylua",
+    ]
+}

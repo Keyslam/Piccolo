@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "report-coverage",
+            "type": "shell",
+            "command": "luacov -r lcov",
+            "presentation": {
+                "reveal": "never"
+            }
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+return {
+    deletestats = true,
+    include = {
+        "piccolo/.*",
+    },
+    exclude = {
+        "piccolo/lib/.*",
+    }
+}

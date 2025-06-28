@@ -1,0 +1,45 @@
+{
+    "configurations": [
+        {
+            "name": "Run Tests (Debug)",
+            "type": "lua-local",
+            "request": "launch",
+            "program": {
+                "command": "busted"
+            },
+            "args": [
+                "--lua=luajit",
+                "-m=./?/init.lua",
+                "--helper=spec/start_lld.lua",
+            ],
+        },
+        {
+            "name": "Run Tests (Coverage)",
+            "type": "lua-local",
+            "request": "launch",
+            "program": {
+                "command": "busted"
+            },
+            "args": [
+                "--lua=luajit",
+                "-m=./?/init.lua",
+                "-c"
+            ],
+            "postDebugTask": "report-coverage",
+        },
+        {
+            "name": "Run Tests (Current File)",
+            "type": "lua-local",
+            "request": "launch",
+            "program": {
+                "command": "busted"
+            },
+            "args": [
+                "--lua=luajit",
+                "-m=./?/init.lua",
+                "--helper=spec/start_lld.lua",
+                "${file}"
+            ]
+        }
+    ]
+}
