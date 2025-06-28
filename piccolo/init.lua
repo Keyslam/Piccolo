@@ -31,4 +31,7 @@ local Piccolo = {
     ]], -- luacov: disable
 }
 
+---@module 'piccolo.entity'
+Piccolo.entity = require(PATH .. '.entity')
+
 return Piccolo
