@@ -27,3 +27,7 @@ Until a `1.0.0` release, minor version bumps may include breaking changes. After
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+This project uses the [`class` module from Batteries](https://github.com/1bardesign/batteries), licensed under MIT.
