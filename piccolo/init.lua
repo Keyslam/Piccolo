@@ -34,4 +34,7 @@ local Piccolo = {
 ---@module 'piccolo.entity'
 Piccolo.entity = require(PATH .. '.entity')
 
+---@module 'piccolo.component'
+Piccolo.component = require(PATH .. '.component')
+
 return Piccolo
