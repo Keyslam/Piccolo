@@ -1,14 +1,183 @@
 local Piccolo = require('piccolo')
 local Entity = Piccolo.entity
+local StubComponent = require('spec.stubs.stub-component')
 
 describe('Entity', function()
-    it('should have the class type "Piccolo.Entity"', function()
-        assert.is(Entity['__type'], 'Piccolo.Entity')
-    end)
-
-    it('should be instantiable', function()
+    it('should be instantiated with no components', function()
         local entity = Entity()
 
-        assert.is_not_nil(entity)
+        local hasComponent = entity:hasComponent(StubComponent)
+        assert.is_false(hasComponent)
+    end)
+
+    describe('addComponent', function()
+        it('should add a new component', function()
+            local entity = Entity()
+
+            local component = entity:addComponent(StubComponent)
+
+            assert.is_not_nil(component)
+            assert.is_true(component:is(StubComponent))
+        end)
+
+        it('should throw if component already exists', function()
+            local entity = Entity()
+            entity:addComponent(StubComponent)
+
+            local ok, err = pcall(function()
+                entity:addComponent(StubComponent)
+            end)
+
+            assert.is_false(ok)
+            assert.matches("Component '.*' already exists", err or '')
+        end)
+    end)
+
+    describe('tryAddComponent', function()
+        it('should add a new component', function()
+            local entity = Entity()
+
+            local component = entity:tryAddComponent(StubComponent)
+
+            assert.is_not_nil(component)
+            ---@cast component -nil
+            assert.is_true(component:is(StubComponent))
+        end)
+
+        it('should do nothing if component already exists', function()
+            local entity = Entity()
+            entity:addComponent(StubComponent)
+
+            local component = entity:tryAddComponent(StubComponent)
+            local currentComponent = entity:getComponent(StubComponent)
+
+            assert.is_nil(component)
+            assert.are_not_equal(currentComponent, component)
+        end)
+    end)
+
+    describe('addOrReplaceComponent', function()
+        it('should replace existing component', function()
+            local entity = Entity()
+            entity:addComponent(StubComponent)
+
+            local component = entity:addOrReplaceComponent(StubComponent)
+
+            assert.is_not_nil(component)
+            assert.is_true(component:is(StubComponent))
+        end)
+
+        it('should destroy existing component', function()
+            local entity = Entity()
+            local oldComponent = entity:addComponent(StubComponent)
+
+            local _ = entity:addOrReplaceComponent(StubComponent)
+
+            assert.is_true(oldComponent.wasDestroyed)
+        end)
+    end)
+
+    describe('hasComponent', function()
+        it('should return true if component exists', function()
+            local entity = Entity()
+            entity:addComponent(StubComponent)
+
+            local hasComponent = entity:hasComponent(StubComponent)
+
+            assert.is_true(hasComponent)
+        end)
+
+        it('should return false if component is missing', function()
+            local entity = Entity()
+
+            local hasComponent = entity:hasComponent(StubComponent)
+
+            assert.is_false(hasComponent)
+        end)
+    end)
+
+    describe('getComponent', function()
+        it('should return the component if it exists', function()
+            local entity = Entity()
+            local addedComponent = entity:addComponent(StubComponent)
+
+            local component = entity:getComponent(StubComponent)
+
+            assert.equal(addedComponent, component)
+        end)
+
+        it('should throw if the component is missing', function()
+            local entity = Entity()
+
+            local ok, err = pcall(function()
+                local _ = entity:getComponent(StubComponent)
+            end)
+
+            assert.is_false(ok)
+            assert.matches('component ".*" not found', err or '')
+        end)
+    end)
+
+    describe('tryGetComponent', function()
+        it('should return the component if it exists', function()
+            local entity = Entity()
+            local addedComponent = entity:addComponent(StubComponent)
+
+            local component = entity:tryGetComponent(StubComponent)
+
+            assert.equal(addedComponent, component)
+        end)
+
+        it('should return nil when component is missing', function()
+            local entity = Entity()
+
+            local component = entity:tryGetComponent(StubComponent)
+
+            assert.is_nil(component)
+        end)
+    end)
+
+    describe('removeComponent', function()
+        it('should remove a existing component', function()
+            local entity = Entity()
+            entity:addComponent(StubComponent)
+
+            entity:removeComponent(StubComponent)
+
+            local hasComponent = entity:hasComponent(StubComponent)
+            assert.is_false(hasComponent)
+        end)
+
+        it('should throw a error is component does not exist', function()
+            local entity = Entity()
+
+            local ok, err = pcall(function()
+                entity:removeComponent(StubComponent)
+            end)
+
+            assert.is_false(ok)
+            assert.matches('component ".*" not found', err or '')
+        end)
+    end)
+
+    describe('tryRemoveComponent', function()
+        it('should remove a existing component if it exists', function()
+            local entity = Entity()
+            entity:addComponent(StubComponent)
+
+            local didRemove = entity:tryRemoveComponent(StubComponent)
+
+            local hasComponent = entity:hasComponent(StubComponent)
+            assert.is_true(didRemove)
+            assert.is_false(hasComponent)
+        end)
+
+        it('should do nothing if the component does not exist', function()
+            local entity = Entity()
+
+            local didRemove = entity:tryRemoveComponent(StubComponent)
+
+            assert.is_false(didRemove)
+        end)
     end)
 end)
