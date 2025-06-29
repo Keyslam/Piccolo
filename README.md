@@ -43,6 +43,10 @@ removed = entity:tryRemoveComponent(componentClass)
 ```lua
 Component = piccolo.component(name)
 
+component = Component(entity)
+
+entity = component:getEntity()
+
 component:enable()
 component:disable()
 

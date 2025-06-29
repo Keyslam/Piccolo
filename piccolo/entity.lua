@@ -27,8 +27,7 @@ function Entity:addComponent(componentClass, ...)
     end
 
     ---@type Piccolo.Component
-    local component = componentClass(...)
-    component.entity = self
+    local component = componentClass(..., self)
     self.components[componentClass] = component
 
     return component

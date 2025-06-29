@@ -5,7 +5,9 @@ local Component = Piccolo.component
 ---@field wasDestroyed boolean
 local StubComponent = Component('StubComponent')
 
-function StubComponent:new()
+function StubComponent:new(...)
+    self:super(...)
+
     self.wasDestroyed = false
 end
 

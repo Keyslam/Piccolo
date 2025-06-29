@@ -4,12 +4,16 @@ local PATH = (...):gsub('%.[^%.]+$', '')
 local Class = require(PATH .. '.vendor.class')
 
 ---@class Piccolo.Component : Class
----@field entity Piccolo.Entity
+---@field private _entity Piccolo.Entity
 ---@overload fun(): Piccolo.Component
 local Component = Class({ name = 'Piccolo.Component' })
 
-function Component:new()
-    self.entity = nil
+function Component:new(...)
+    self._entity = select(select('#', ...), ...)
+end
+
+function Component:getEntity()
+    return self._entity
 end
 
 function Component:enable() end
