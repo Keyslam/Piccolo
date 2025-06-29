@@ -19,6 +19,38 @@ A game architecture library for LÖVE
    local piccolo = require("piccolo")
    ```
 
+## Quick reference
+
+### Entity
+
+```lua
+entity = piccolo.entity()
+
+component = entity:addComponent(componentClass, ...)
+component = entity:tryAddComponent(componentClass, ...)
+component = entity:addOrReplaceComponent(componentClass, ...)
+
+hasComponent = entity:hasComponent(componentClass)
+component = entity:getComponent(componentClass)
+component = entity:tryGetComponent(componentClass)
+
+entity:removeComponent(componentClass)
+removed = entity:tryRemoveComponent(componentClass)
+```
+
+### Component
+
+```lua
+Component = piccolo.component(name)
+
+component:enable()
+component:disable()
+
+function Component:onEnable() end
+function Component:onDisable() end
+function Component:onDestroy() end
+```
+
 ## Versioning
 
 Piccolo uses [Semantic Versioning (SemVer)](https://semver.org/).
