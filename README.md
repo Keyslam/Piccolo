@@ -49,6 +49,8 @@ entity = component:getEntity()
 
 component:enable()
 component:disable()
+isEnabled = component:isEnabled()
+isDisabled = component:isDisabled()
 
 function ComponentClass:onEnable() end
 function ComponentClass:onDisable() end
