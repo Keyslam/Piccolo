@@ -3,7 +3,7 @@ local PATH = (...):gsub('%.[^%.]+$', '')
 ---@module "piccolo.vendor.class"
 local Class = require(PATH .. '.vendor.class')
 
----@class Piccolo.Entity : Class
+---@class Piccolo.Entity : Piccolo.Class
 ---@field components table<Piccolo.Component, Piccolo.Component>
 ---@overload fun(): Piccolo.Entity
 local Entity = Class({ name = 'Piccolo.Entity' })

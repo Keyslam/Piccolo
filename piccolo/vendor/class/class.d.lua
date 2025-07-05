@@ -1,4 +1,4 @@
----@class Class
+---@class Piccolo.Class
 ---@field new fun(self: table, ...)
 ---@field super fun(self: table, ...)
 ---@field is fun(self: table, t: table): boolean

@@ -3,7 +3,7 @@ local PATH = (...):gsub('%.[^%.]+$', '')
 ---@module "piccolo.vendor.class"
 local Class = require(PATH .. '.vendor.class')
 
----@class Piccolo.Component : Class
+---@class Piccolo.Component : Piccolo.Class
 ---@field private _isEnabled boolean
 ---@field private _entity Piccolo.Entity
 ---@overload fun(): Piccolo.Component
