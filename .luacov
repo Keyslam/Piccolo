@@ -4,6 +4,6 @@ return {
         "piccolo/.*",
     },
     exclude = {
-        "piccolo/lib/.*",
+        "piccolo/vendor/.*",
     }
 }

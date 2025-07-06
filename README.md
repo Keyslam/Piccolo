@@ -19,6 +19,44 @@ A game architecture library for LÖVE
    local piccolo = require("piccolo")
    ```
 
+## Quick reference
+
+### Entity
+
+```lua
+entity = piccolo.entity()
+
+component = entity:addComponent(componentClass, ...)
+component = entity:tryAddComponent(componentClass, ...)
+component = entity:addOrReplaceComponent(componentClass, ...)
+
+hasComponent = entity:hasComponent(componentClass)
+component = entity:getComponent(componentClass)
+component = entity:tryGetComponent(componentClass)
+
+entity:removeComponent(componentClass)
+removed = entity:tryRemoveComponent(componentClass)
+```
+
+### Component
+
+```lua
+ComponentClass = piccolo.component(name)
+
+component = ComponentClass(entity)
+
+entity = component:getEntity()
+
+component:enable()
+component:disable()
+isEnabled = component:isEnabled()
+isDisabled = component:isDisabled()
+
+function ComponentClass:onEnable() end
+function ComponentClass:onDisable() end
+function ComponentClass:onDestroy() end
+```
+
 ## Versioning
 
 Piccolo uses [Semantic Versioning (SemVer)](https://semver.org/).
@@ -27,3 +65,7 @@ Until a `1.0.0` release, minor version bumps may include breaking changes. After
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+This project uses the [`class` module from Batteries](https://github.com/1bardesign/batteries), licensed under MIT.
