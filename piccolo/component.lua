@@ -4,18 +4,18 @@ local PATH = (...):gsub('%.[^%.]+$', '')
 local Class = require(PATH .. '.vendor.class')
 
 ---@class Piccolo.Component : Piccolo.Class
----@field private _isEnabled boolean
----@field private _entity Piccolo.Entity
+---@field private enabled boolean
+---@field private entity Piccolo.Entity
 ---@overload fun(): Piccolo.Component
 local Component = Class({ name = 'Piccolo.Component' })
 
 function Component:new(...)
-    self._isEnabled = true
-    self._entity = select(select('#', ...), ...)
+    self.enabled = true
+    self.entity = select(select('#', ...), ...)
 end
 
 function Component:getEntity()
-    return self._entity
+    return self.entity
 end
 
 function Component:enable()
@@ -23,7 +23,7 @@ function Component:enable()
         return
     end
 
-    self._isEnabled = true
+    self.enabled = true
     self:onEnable()
 end
 
@@ -32,14 +32,14 @@ function Component:disable()
         return
     end
 
-    self._isEnabled = false
+    self.enabled = false
     self:onDisable()
 end
 
 ---@return boolean
 ---@nodiscard
 function Component:isEnabled()
-    return self._isEnabled
+    return self.enabled
 end
 
 ---@return boolean
