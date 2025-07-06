@@ -5,8 +5,8 @@ local Component = Piccolo.component
 ---@field wasEnabled boolean
 ---@field wasDisabled boolean
 ---@field wasDestroyed boolean
----@overload fun(Piccolo.Entity): StubComponent
-local StubComponent = Component('StubComponent')
+---@overload fun(entity: Piccolo.Entity): StubComponent
+local StubComponent = Component('StubComponent') ---@type StubComponent
 
 function StubComponent:new(...)
     self:super(...)
