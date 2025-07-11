@@ -4,11 +4,13 @@ local PATH = (...):gsub('%.[^%.]+$', '')
 local Class = require(PATH .. '.vendor.class')
 
 ---@class Piccolo.Entity : Piccolo.Class
+---@field scene Piccolo.Scene
 ---@field components table<Piccolo.Component, Piccolo.Component>
----@overload fun(): Piccolo.Entity
+---@overload fun(scene: Piccolo.Scene): Piccolo.Entity
 local Entity = Class({ name = 'Piccolo.Entity' })
 
-function Entity:new()
+function Entity:new(scene)
+    self.scene = scene
     self.components = {}
 end
 
@@ -114,6 +116,12 @@ function Entity:tryRemoveComponent(componentClass)
     self:removeComponent(componentClass)
 
     return true
+end
+
+---@return Piccolo.Scene
+---@nodiscard
+function Entity:getScene()
+    return self.scene
 end
 
 return Entity
