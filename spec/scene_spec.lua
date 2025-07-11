@@ -7,4 +7,13 @@ describe('scene', function()
 
         assert.is_not_nil(scene)
     end)
+
+    describe('spawn', function()
+        it('should', function()
+            local scene = Scene()
+            local entity = scene:spawn()
+
+            assert.equal(scene, entity:getScene())
+        end)
+    end)
 end)

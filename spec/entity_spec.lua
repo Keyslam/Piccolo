@@ -1,10 +1,11 @@
 local Piccolo = require('piccolo')
 local Entity = Piccolo.entity
+local StubScene = require('spec.stubs.stub-scene')
 local StubComponent = require('spec.stubs.stub-component')
 
 describe('Entity', function()
     it('should be instantiated with no components', function()
-        local entity = Entity()
+        local entity = Entity(StubScene)
 
         local hasComponent = entity:hasComponent(StubComponent)
         assert.is_false(hasComponent)
@@ -12,7 +13,7 @@ describe('Entity', function()
 
     describe('addComponent', function()
         it('should add a new component', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
 
             local component = entity:addComponent(StubComponent)
 
@@ -21,7 +22,7 @@ describe('Entity', function()
         end)
 
         it('should throw if component already exists', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             entity:addComponent(StubComponent)
 
             local ok, err = pcall(function()
@@ -35,7 +36,7 @@ describe('Entity', function()
 
     describe('tryAddComponent', function()
         it('should add a new component', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
 
             local component = entity:tryAddComponent(StubComponent)
 
@@ -45,7 +46,7 @@ describe('Entity', function()
         end)
 
         it('should do nothing if component already exists', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             entity:addComponent(StubComponent)
 
             local component = entity:tryAddComponent(StubComponent)
@@ -58,7 +59,7 @@ describe('Entity', function()
 
     describe('addOrReplaceComponent', function()
         it('should replace existing component', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             entity:addComponent(StubComponent)
 
             local component = entity:addOrReplaceComponent(StubComponent)
@@ -68,7 +69,7 @@ describe('Entity', function()
         end)
 
         it('should destroy existing component', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             local oldComponent = entity:addComponent(StubComponent)
 
             local _ = entity:addOrReplaceComponent(StubComponent)
@@ -79,7 +80,7 @@ describe('Entity', function()
 
     describe('hasComponent', function()
         it('should return true if component exists', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             entity:addComponent(StubComponent)
 
             local hasComponent = entity:hasComponent(StubComponent)
@@ -88,7 +89,7 @@ describe('Entity', function()
         end)
 
         it('should return false if component is missing', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
 
             local hasComponent = entity:hasComponent(StubComponent)
 
@@ -98,7 +99,7 @@ describe('Entity', function()
 
     describe('getComponent', function()
         it('should return the component if it exists', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             local addedComponent = entity:addComponent(StubComponent)
 
             local component = entity:getComponent(StubComponent)
@@ -107,7 +108,7 @@ describe('Entity', function()
         end)
 
         it('should throw if the component is missing', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
 
             local ok, err = pcall(function()
                 local _ = entity:getComponent(StubComponent)
@@ -120,7 +121,7 @@ describe('Entity', function()
 
     describe('tryGetComponent', function()
         it('should return the component if it exists', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             local addedComponent = entity:addComponent(StubComponent)
 
             local component = entity:tryGetComponent(StubComponent)
@@ -129,7 +130,7 @@ describe('Entity', function()
         end)
 
         it('should return nil when component is missing', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
 
             local component = entity:tryGetComponent(StubComponent)
 
@@ -139,7 +140,7 @@ describe('Entity', function()
 
     describe('removeComponent', function()
         it('should remove a existing component', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             entity:addComponent(StubComponent)
 
             entity:removeComponent(StubComponent)
@@ -149,7 +150,7 @@ describe('Entity', function()
         end)
 
         it('should throw a error is component does not exist', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
 
             local ok, err = pcall(function()
                 entity:removeComponent(StubComponent)
@@ -162,7 +163,7 @@ describe('Entity', function()
 
     describe('tryRemoveComponent', function()
         it('should remove a existing component if it exists', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
             entity:addComponent(StubComponent)
 
             local didRemove = entity:tryRemoveComponent(StubComponent)
@@ -173,11 +174,20 @@ describe('Entity', function()
         end)
 
         it('should do nothing if the component does not exist', function()
-            local entity = Entity()
+            local entity = Entity(StubScene)
 
             local didRemove = entity:tryRemoveComponent(StubComponent)
 
             assert.is_false(didRemove)
+        end)
+    end)
+
+    describe('getScene', function()
+        it('should return the scene the entity was created with', function()
+            local entity = Entity(StubScene)
+
+            local scene = entity:getScene()
+            assert.equal(StubScene, scene)
         end)
     end)
 end)
