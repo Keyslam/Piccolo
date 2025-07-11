@@ -16,4 +16,25 @@ describe('scene', function()
             assert.equal(scene, entity:getScene())
         end)
     end)
+
+    describe('getEntities', function()
+        it('should return all entities in the scene', function()
+            local scene = Scene()
+            local entity1 = scene:spawn()
+            local entity2 = scene:spawn()
+
+            local entities = scene:getEntities()
+            assert.equal(entity1, entities[1])
+            assert.equal(entity2, entities[2])
+        end)
+
+        it('should return the passed table', function()
+            local scene = Scene()
+
+            local out = {}
+            local entities = scene:getEntities(out)
+
+            assert.equal(out, entities)
+        end)
+    end)
 end)

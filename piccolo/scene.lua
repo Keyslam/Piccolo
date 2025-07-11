@@ -23,4 +23,16 @@ function Scene:spawn()
     return entity
 end
 
+---@param out table<Piccolo.Entity> | nil
+---@return table<Piccolo.Entity>
+function Scene:getEntities(out)
+    out = out or {}
+
+    for i, entity in ipairs(self.entities) do
+        out[i] = entity
+    end
+
+    return out
+end
+
 return Scene
