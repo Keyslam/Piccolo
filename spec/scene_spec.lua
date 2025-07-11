@@ -9,7 +9,7 @@ describe('scene', function()
     end)
 
     describe('spawn', function()
-        it('should', function()
+        it('should create a entity for the scene', function()
             local scene = Scene()
             local entity = scene:spawn()
 
