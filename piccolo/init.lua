@@ -34,6 +34,9 @@ local Piccolo = {
 ---@module 'piccolo.scene'
 Piccolo.scene = require(PATH .. '.scene')
 
+---@module 'piccolo.service'
+Piccolo.service = require(PATH .. '.service')
+
 ---@module 'piccolo.entity'
 Piccolo.entity = require(PATH .. '.entity')
 

@@ -1,7 +1,8 @@
 local Piccolo = require('piccolo')
 local Scene = Piccolo.scene
+local StubService = require('spec.stubs.stub-service')
 
-describe('scene', function()
+describe('Scene', function()
     it('should be instantiated', function()
         local scene = Scene()
 
@@ -14,6 +15,63 @@ describe('scene', function()
             local entity = scene:spawn()
 
             assert.equal(scene, entity:getScene())
+        end)
+    end)
+
+    describe('hasService', function()
+        it('should return true if service exists', function()
+            local scene = Scene(StubService)
+
+            local hasService = scene:hasService(StubService)
+
+            assert.is_true(hasService)
+        end)
+
+        it('should return false if service is missing', function()
+            local scene = Scene()
+
+            local hasService = scene:hasService(StubService)
+
+            assert.is_false(hasService)
+        end)
+    end)
+
+    describe('getService', function()
+        it('should return the service instance if it exists', function()
+            local scene = Scene(StubService)
+
+            local service = scene:getService(StubService)
+
+            assert.is_not_nil(service)
+        end)
+
+        it('should throw an error when service is missing', function()
+            local scene = Scene()
+
+            local ok, err = pcall(function()
+                local _ = scene:getService(StubService)
+            end)
+
+            assert.is_false(ok)
+            assert.matches('service ".*" not found', err or '')
+        end)
+    end)
+
+    describe('tryGetService', function()
+        it('should return the service instance if it exists', function()
+            local scene = Scene(StubService)
+
+            local service = scene:tryGetService(StubService)
+
+            assert.is_not_nil(service)
+        end)
+
+        it('should return nil when service is missing', function()
+            local scene = Scene()
+
+            local service = scene:tryGetService(StubService)
+
+            assert.is_nil(service)
         end)
     end)
 
