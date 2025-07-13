@@ -32,6 +32,28 @@ function Scene:spawn()
     return entity
 end
 
+---@param event string
+---@param ... any
+---@return self
+function Scene:emit(event, ...)
+    do
+        local handlerName = event
+
+        for _, service in pairs(self.services) do
+            local handler = service[handlerName]
+            if handler ~= nil then
+                handler(service, ...)
+            end
+        end
+    end
+
+    for _, entity in ipairs(self.entities) do
+        entity:emit(event, ...)
+    end
+
+    return self
+end
+
 ---@generic T : Piccolo.Service
 ---@param serviceClass T
 ---@return boolean

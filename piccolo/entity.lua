@@ -118,6 +118,31 @@ function Entity:tryRemoveComponent(componentClass)
     return true
 end
 
+---@param event string
+---@param ... any
+---@return self
+function Entity:emit(event, ...)
+    local handlerName = event
+
+    for _, component in pairs(self.components) do
+        local handler = component[handlerName]
+        if handler ~= nil then
+            handler(component, ...)
+        end
+    end
+
+    return self
+end
+
+---@param event string
+---@param ... any
+---@return self
+function Entity:emitScene(event, ...)
+    self:getScene():emit(event, ...)
+
+    return self
+end
+
 ---@return Piccolo.Scene
 ---@nodiscard
 function Entity:getScene()
