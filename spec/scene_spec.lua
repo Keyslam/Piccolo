@@ -18,6 +18,28 @@ describe('Scene', function()
         end)
     end)
 
+    describe('emit', function()
+        it('should call handlers on services', function()
+            local scene = Scene(StubService)
+            local service = scene:getService(StubService)
+            local eventSpy = spy.on(service, 'onEvent')
+
+            scene:emit('onEvent', 'arg1', 'arg2')
+
+            assert.spy(eventSpy).called_with(service, 'arg1', 'arg2')
+        end)
+
+        it('should propage to entities', function()
+            local scene = Scene()
+            local entity = scene:spawn()
+            local emitSpy = spy.on(entity, 'emit')
+
+            scene:emit('onEvent', 'arg1', 'arg2')
+
+            assert.spy(emitSpy).called_with(entity, 'onEvent', 'arg1', 'arg2')
+        end)
+    end)
+
     describe('hasService', function()
         it('should return true if service exists', function()
             local scene = Scene(StubService)

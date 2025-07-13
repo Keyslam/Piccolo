@@ -19,6 +19,17 @@ describe('Component', function()
         end)
     end)
 
+    describe('emitScene', function()
+        it('should propagate to entity', function()
+            local component = StubComponent(StubEntity)
+            local emitSpy = spy.on(StubEntity, 'emitScene')
+
+            component:emitScene('onEvent', 'arg1', 'arg2')
+
+            assert.spy(emitSpy).called_with(StubEntity, 'onEvent', 'arg1', 'arg2')
+        end)
+    end)
+
     describe('getEntity', function()
         it("should return the component's entity", function()
             local component = StubComponent(StubEntity)

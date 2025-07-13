@@ -5,4 +5,6 @@ local Service = Piccolo.service
 ---@overload fun(): StubService
 local StubService = Service('StubService') ---@type StubService
 
+function StubService:onEvent() end
+
 return StubService
