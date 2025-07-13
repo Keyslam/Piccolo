@@ -182,6 +182,29 @@ describe('Entity', function()
         end)
     end)
 
+    describe('emit', function()
+        it('should call handlers on components', function()
+            local entity = Entity(StubScene)
+            local stubComponent = entity:addComponent(StubComponent)
+            local handlerSpy = spy.on(stubComponent, 'onEvent')
+
+            entity:emit('onEvent', 'arg1', 'arg2')
+
+            assert.spy(handlerSpy).called_with(stubComponent, 'arg1', 'arg2')
+        end)
+    end)
+
+    describe('emitScene', function()
+        it('should propagate events to scene', function()
+            local entity = Entity(StubScene)
+            local emitSpy = spy.on(entity.scene, 'emit')
+
+            entity:emitScene('onEvent', 'arg1', 'arg2')
+
+            assert.spy(emitSpy).called_with(StubScene, 'onEvent', 'arg1', 'arg2')
+        end)
+    end)
+
     describe('getScene', function()
         it('should return the scene the entity was created with', function()
             local entity = Entity(StubScene)

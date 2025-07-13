@@ -8,6 +8,28 @@ describe('Component', function()
         assert.is_true(component:isEnabled())
     end)
 
+    describe('emit', function()
+        it('should pass events to the entity', function()
+            local component = StubComponent(StubEntity)
+            local emitSpy = spy.on(StubEntity, 'emit')
+
+            component:emit('onEvent', 'arg1', 'arg2')
+
+            assert.spy(emitSpy).called_with(StubEntity, 'onEvent', 'arg1', 'arg2')
+        end)
+    end)
+
+    describe('emitScene', function()
+        it('should propagate to entity', function()
+            local component = StubComponent(StubEntity)
+            local emitSpy = spy.on(StubEntity, 'emitScene')
+
+            component:emitScene('onEvent', 'arg1', 'arg2')
+
+            assert.spy(emitSpy).called_with(StubEntity, 'onEvent', 'arg1', 'arg2')
+        end)
+    end)
+
     describe('getEntity', function()
         it("should return the component's entity", function()
             local component = StubComponent(StubEntity)

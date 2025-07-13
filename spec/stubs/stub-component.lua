@@ -28,6 +28,8 @@ function StubComponent:onDestroy()
     self.wasDestroyed = true
 end
 
+function StubComponent:onEvent() end
+
 function StubComponent:resetSpies()
     self.wasEnabled = false
     self.wasDisabled = false

@@ -14,6 +14,24 @@ function Component:new(...)
     self.entity = select(select('#', ...), ...)
 end
 
+---@param event string
+---@param ... any
+---@return self
+function Component:emit(event, ...)
+    self:getEntity():emit(event, ...)
+
+    return self
+end
+
+---@param event string
+---@param ... any
+---@return self
+function Component:emitScene(event, ...)
+    self:getEntity():emitScene(event, ...)
+
+    return self
+end
+
 function Component:getEntity()
     return self.entity
 end
